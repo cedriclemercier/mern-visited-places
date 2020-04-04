@@ -47,7 +47,6 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@demo-cluster-nxw2x.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
   .then(() => {
-    // default env variable by heroku
     app.listen(process.env.PORT || 5000);
   })
   .catch(error => {

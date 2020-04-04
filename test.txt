@@ -1,9 +1,0 @@
-// {
-//     "env": {
-//         "DB_USER": "cedric_admin",
-//         "DB_PASSWORD": "iT8143nex7cR",
-//         "DB_NAME": "mern",
-//         "GOOGLE_API_KEY": "AIzaSyCRXLT_NvpKEC7gYv-nyD4V6Iq9pxBArjo",
-//         "JWT_KEY": "supersecret_dont_share"
-//     }
-// }
