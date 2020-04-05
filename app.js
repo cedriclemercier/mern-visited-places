@@ -14,6 +14,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
+app.use(express.static(path.join('public')));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -26,13 +27,17 @@ app.use('/api/places', placesRoutes); // => /api/places
 app.use('/api/users', usersRoutes); // => /api/users
 
 app.use((req, res, next) => {
-  const error = new HttpError('Could not find this route', 404);
-  throw error;
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
+
+// app.use((req, res, next) => {
+//   const error = new HttpError('Could not find this route', 404);
+//   throw error;
+// });
 
 app.use((error, req, res, next) => {
   if (req.file) {
-    fs.unlink(req.file.path, err => {
+    fs.unlink(req.file.path, (err) => {
       console.log(err);
     });
   }
@@ -45,10 +50,12 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@demo-cluster-nxw2x.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
+  .connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@demo-cluster-nxw2x.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+  )
   .then(() => {
     app.listen(process.env.PORT || 5000);
   })
-  .catch(error => {
+  .catch((error) => {
     console.log(error);
   });
