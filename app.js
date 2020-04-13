@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const placesRoutes = require('./routes/places-route');
 const usersRoutes = require('./routes/users-route');
 const HttpError = require('./models/http-error');
+const s3Route = require('./routes/s3-route');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 app.use(express.static(path.join('public')));
+app.engine('html', require('ejs').renderFile);
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,6 +24,8 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
   next();
 });
+
+// app.use('/api/upload-s3', s3Route);
 
 app.use('/api/places', placesRoutes); // => /api/places
 app.use('/api/users', usersRoutes); // => /api/users

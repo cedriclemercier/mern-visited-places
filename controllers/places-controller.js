@@ -50,6 +50,13 @@ const getPlacesByUserId = async (req, res, next) => {
 
 const createPlace = async (req, res, next) => {
   const errors = validationResult(req);
+  console.log('====================  Places controller REQ BODY ==============================');
+
+  console.log(req.body);
+
+  console.log('--------- req.file ------');
+  console.log(req.file);
+  // console.log(req.file.path);
 
   if (!errors.isEmpty()) {
     console.log(errors);
@@ -70,7 +77,12 @@ const createPlace = async (req, res, next) => {
     description,
     address,
     location: coordinates,
-    image: req.file.path,
+
+    // Old code to save file to mern application
+    // image: req.file.path,
+
+    // New code that takes the request object to save to S3
+    image: req.file.key,
     creator: req.userData.userId
   });
 

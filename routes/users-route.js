@@ -3,6 +3,7 @@ const { check } = require('express-validator');
 
 const usersControllers = require('../controllers/users-controllers');
 const fileUpload = require('../middleware/file-upload');
+const uploadS3 = require('../middleware/s3-upload');
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router.get('/', usersControllers.getUsers);
 
 router.post(
   '/signup',
-  fileUpload.single('image'),
+  uploadS3.single('image'),
   [
     check('name')
       .not()

@@ -50,7 +50,13 @@ const signup = async (req, res, next) => {
   const createdUser = new User({
     name,
     email,
-    image: req.file.path,
+
+    // Old code to save file to mern application
+    // image: req.file.path,
+
+    // New code that takes the request object to save to S3
+    image: req.file.key,
+    
     password: hashedPassword,
     places: []
   });

@@ -3,6 +3,7 @@ const { check } = require('express-validator');
 
 const placesControllers = require('../controllers/places-controller');
 const fileUpload = require('../middleware/file-upload');
+const uploadS3 = require('../middleware/s3-upload');
 const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
@@ -15,7 +16,7 @@ router.use(checkAuth);
 
 router.post(
   '/',
-  fileUpload.single('image'),
+  uploadS3.single('image'),
   [
     check('title')
       .not()
